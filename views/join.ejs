@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Join Room</title>
+   </head>
+   <script src = "/socket.io/socket.io.js"></script>
+   
+   <script>
+
+   </script>
+   <body>
+   	<h1> Join Room</h1>
+
+	<!-- show any messages that come back with authentication -->
+	<% if (message.length > 0) { %>
+		<div class="alert alert-danger"><%= message %></div>
+	<% } %>
+
+	<!-- LOGIN FORM -->
+	<form action="/join" method="post">
+		<div class="form-group">
+			<label>Room Code</label>
+			<input type="text" class="form-control" name="email">
+		</div>
+
+		<button type="button" class="btn btn-warning btn-lg" onclick="joinroom()">Join</button>
+	</form>
+   
+   </body>
+</html>
+
+<script>
+function joinroom() {
+// let's assume that the client page, once rendered, knows what room it wants to join
+    var room = "abc123";
+
+    socket.on('connect', function() {
+   // Connected, let's sign-up for to receive messages for this room
+    socket.emit('room', room);
+    });
+
+    socket.on('message', function(data) {
+    console.log('Incoming message:', data);
+    });
+}
+</script>
